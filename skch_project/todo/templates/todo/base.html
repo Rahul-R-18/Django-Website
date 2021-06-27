@@ -1,0 +1,53 @@
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>
+        {% block title%}
+        {%endblock%}
+    </title>
+</head>
+
+<body>
+
+    <body>
+        <div class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#"> SKCH Class 12 Project </a>
+                </div>
+                <div class="collapse navbar-collapse" id="theNav">
+                    <ul class="navbar-nav nav navbar-right">
+                        <li> <a href="{% url 'createtodo' %}">Create</a>
+                        <li> <a href="{% url 'currenttodos' %}">Current</a>
+                        <li> <a href="{% url 'completedtodos' %}">Completed</a>
+                        <li> <a href="#">Learn Python</a>
+                        <li> <a href="#">Python Test</a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        {%if user.is_authenticated%}
+        <div class="row text-center" >
+        Logged In as {{user.username}}
+        </div>
+
+        <form action="{% url 'logoutuser' %}" method="POST">
+            {% csrf_token %}
+
+            <button type="submit">Logout</button>
+        </form>
+
+        {%else%}
+        <div class="row text-center">
+            <a href="{% url 'signupuser' %}"> Sign Up</a>
+            <a href="{% url 'loginuser' %}"> Log In</a>
+        </div>
+        {%endif%}
+        <br>
+        <br>
+
+        {% block content%}
+
+        {% endblock %}
+    </body>

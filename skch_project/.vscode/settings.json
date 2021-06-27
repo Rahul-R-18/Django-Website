@@ -1,0 +1,20 @@
+{
+    "python.pythonPath": "C:\\Users\\rahul\\AppData\\Local\\Programs\\Python\\Python38-32\\python.exe",
+    "python.languageServer": "Pylance",
+    "terminal.integrated.fontSize": 20,
+    "window.zoomLevel":1,
+    "emmet.includeLanguages": {"django-html":"html"},
+    "files.associations": {
+        "**/*.html": "html",
+        "**/templates/**/*.html": "django-html",
+        "**/templates/**/*": "django-txt",
+        "**/requirements{/**,*}.{txt,in}": "pip-requirements"
+    },
+    "beautify.language": {
+        "html": [
+            "htm",
+            "html",
+            "django-html"
+        ]
+    }
+}
