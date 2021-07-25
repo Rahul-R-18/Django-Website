@@ -8,7 +8,7 @@ Current
  <li>
     <a href="{%url 'viewtodo' todo.id %}">
     {%if todo.important%}<b>{%endif%}{{ todo.title }}{%if todo.important%}</b>{%endif%}
-    {%if todo.memo%} - {{todo.memo}}{%endif%}
+    {{todo.subject}}
     </a>
  </li>
  {%endfor%}
