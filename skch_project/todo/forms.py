@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Todo
+from .models import Todo,Question
 
 class TodoForm(ModelForm):
     class Meta:
@@ -9,4 +9,12 @@ class TodoForm(ModelForm):
             "deadline":"Deadline (YYYY-MM-DD)"
         }
 
+class PQuestionForm(ModelForm):
+    class Meta:
+        model = Question
+        fields = ['Question','urgent','subject']
 
+class AQuestionForm(ModelForm):
+    class Meta:
+        model = Question
+        fields = ['answer']

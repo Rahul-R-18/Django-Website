@@ -31,5 +31,17 @@ urlpatterns = [
     path('todo/<int:todo_pk>',views.viewtodo,name='viewtodo'),
     path('todo/<int:todo_pk>/complete',views.completetodo,name='completetodo'),
     path('todo/<int:todo_pk>/delete',views.deletetodo,name='deletetodo'),
-    path('completed/',views.completedtodos,name='completedtodos')
+    path('completed/',views.completedtodos,name='completedtodos'),
+
+    
+    
+
+    path('postq',views.postq,name='postq'),
+    path('unanswered',views.unanswered,name='unanswered'),
+    path('question/<int:question_pk>', views.answer, name='answer'),
+    path('answered',views.answered,name='answered'),
+    path('notes',views.notes,name='notes'),
+    path('about',views.about,name='about'),
+
+    
 ]

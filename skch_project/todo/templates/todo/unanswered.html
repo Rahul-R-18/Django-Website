@@ -1,0 +1,19 @@
+{% extends 'todo/base.html' %}
+{% block content %}
+
+
+<h1>Unanswered Questions: </h1>
+
+
+<ul>
+  {% for question in questions %}
+  <li> 
+    <a href="{% url 'answer' question.id %}">
+    {% if question.urgent %} <b> {% endif %} {{ question.Question }} {% if question.urgent %}</b> {% endif %} 
+    {% if quetion.description %} - {{ quetion.description }}{% endif %} 
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

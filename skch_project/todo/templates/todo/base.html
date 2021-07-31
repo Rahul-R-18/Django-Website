@@ -1,53 +1,96 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <title>
-        {% block title%}
-        {%endblock%}
-    </title>
-</head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="icon" type="image/png"  href="{% static 'todopics/b.png' %}">
+    <title>Byte Academy</title>
+</head>
 <body>
 
-    <body>
-        <div class="navbar navbar-default">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#"> SKCH Class 12 Project </a>
-                </div>
-                <div class="collapse navbar-collapse" id="theNav">
-                    <ul class="navbar-nav nav navbar-right">
-                        <li> <a href="{% url 'createtodo' %}">Create</a>
-                        <li> <a href="{% url 'currenttodos' %}">Current</a>
-                        <li> <a href="{% url 'completedtodos' %}">Completed</a>
-                        <li> <a href="#">Learn Python</a>
-                        <li> <a href="#">Python Test</a>
-                    </ul>
-                </div>
-            </div>
-        </div>
+<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+<div class="container">
+    <a class="navbar-brand" href="{% url 'home' %}">
+         <img src="{% static 'todopics/b.png' %}" width="30" height="30" class="d-inline-block align-top">
+        <span>Byte academy</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+    {% if user.is_authenticated %}
+        <ul class="navbar-nav mr-auto">
+                
+                <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'about' %}">About us</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'notes' %}">Useful Links</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'postq' %}">Post A Question</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'unanswered' %}">Unanswered Questions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'answered' %}">Answered Questions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'createtodo' %}">Create Todo</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'currenttodos' %}">Current Todos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'completedtodos' %}">Completed Todos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Tests</a>
+                </li>
+                
+        </ul>
+        
 
-        {%if user.is_authenticated%}
-        <div class="row text-center" >
-        Logged In as {{user.username}}
-        </div>
+        <ul class="navbar-nav ml-auto">
+                
+                <span class="navbar-text">
+                    Logged in as {{ user.username }}
+                </span>
+                <form action="{% url 'logoutuser' %}" method="POST">
+                     {% csrf_token %}
 
-        <form action="{% url 'logoutuser' %}" method="POST">
-            {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Logout</button>
+                </form>
+        </ul>
+                
+    {% else %}
 
-            <button type="submit">Logout</button>
-        </form>
+        <ul class="navbar-nav mr-auto">
+            
+                <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'about' %}">About us</a>
+                </li>
 
-        {%else%}
-        <div class="row text-center">
-            <a href="{% url 'signupuser' %}"> Sign Up</a>
-            <a href="{% url 'loginuser' %}"> Log In</a>
-        </div>
-        {%endif%}
-        <br>
-        <br>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signupuser' %}">Sign Up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'loginuser' %}">Login</a>
+                </li>
+        </ul>
 
-        {% block content%}
+    {% endif%}
+    
+</div>
+</nav>
 
-        {% endblock %}
-    </body>
+<div class="container">
+{% block content %}{% endblock %}
+</div>

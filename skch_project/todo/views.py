@@ -3,8 +3,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login,logout,authenticate
-from .forms import TodoForm
-from .models import Todo
+from .forms import TodoForm,PQuestionForm,AQuestionForm
+from .models import Todo,Question
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 
@@ -112,3 +112,57 @@ def completedtodos(request):
     todos=Todo.objects.filter(user=request.user, datecompleted__isnull=False).order_by('-datecompleted')
     return render(request, 'todo/completedtodos.html',{'todos':todos})
 
+
+#####################################################################################
+
+
+
+
+def notes(request):
+    return render(request, 'todo/notes.html')
+
+def about(request):
+    return render(request, 'todo/about.html')
+
+
+@login_required
+def postq(request):
+    if request.method == 'GET':
+        return render(request, 'todo/postq.html', {'form':PQuestionForm()})
+    else:
+        try:
+            form = PQuestionForm(request.POST)
+            newq = form.save(commit=False)
+            newq.user = request.user
+            newq.save()
+            return redirect('unanswered')
+        except ValueError:
+            return render(request, 'todo/postq.html', {'form':PQuestionForm(), 'error':'Bad data Passed in'})
+
+@login_required 
+def answered(request):
+    questions = Question.objects.filter(answered__isnull=False)
+        
+    return render(request, 'todo/answered.html',{'questions':questions})
+
+@login_required
+def unanswered(request):
+    questions = Question.objects.filter(answered__isnull=True)
+    return render(request, 'todo/unanswered.html',{'questions':questions})
+
+@login_required
+def answer(request, question_pk):
+    question = get_object_or_404(Question, pk=question_pk)
+
+    if request.method == 'GET':
+        form = AQuestionForm(instance=question)
+        return render(request, 'todo/answer.html',{'question':question, 'form':form})           
+    else:
+        try:
+            form = AQuestionForm(request.POST, instance=question)
+            form.save()
+            question.answered = timezone.now()
+            question.save()
+            return redirect('unanswered')
+        except ValueError:
+            return render(request, 'todo/answer.html',{'question':question, 'form':form, 'error': 'Bad info'})

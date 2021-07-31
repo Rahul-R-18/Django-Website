@@ -4,4 +4,24 @@
 <div class="row text-center">
 HOME
 </div>
+
+
+
+{% if user.is_authenticated %}
+
+<div class="text ">
+<a href={% url 'notes' %}> <img src="static/todopics/prog.png" class="rounded float-left" alt="" height= 300 width =320></img> </a>
+<a href={% url 'postq' %}> <img src="static/todopics/doubts.png" class="rounded float-right" alt="" height= 300 width =320></img> </a>
+<a href={% url 'createtodo' %}> <img src="static/todopics/todo.png" class="rounded float-center" alt="" height= 310 width =460></img> </a>
+
+
+{% else %}
+
+<a href={% url 'loginuser' %}> <img src="static/todopics/prog.png" class="rounded float-left" alt="" height= 300 width =320></img> </a>
+<a href={% url 'loginuser' %}> <img src="static/todopics/doubts.png" class="rounded float-right" alt="" height= 300 width =320></img>  </a>
+<a href={% url 'loginuser' %}> <img src="static/todopics/todo.png" class="rounded float-center" alt="" height= 310 width =460></img> </a>
+
+{% endif %}
+
+
 {%endblock%}

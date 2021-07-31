@@ -21,3 +21,24 @@ class Todo(models.Model):
     
     def __str__(self):
         return f"{self.title} { self.important} {self.subject}"
+        
+class Question(models.Model):
+    
+    Question = models.TextField()
+
+    answer = models.TextField(blank=True)
+    
+    posted = models.DateTimeField(auto_now_add=True)
+
+    answered = models.DateTimeField(null=True, blank=True)
+
+    urgent = models.BooleanField(default=False)
+
+    user = models.ForeignKey(User, on_delete = models.CASCADE)#v imp for us
+
+    subject_choices = (('cs','CS'),('math','MATH'),('physics','PHYSICS'),('chem','CHEM'))
+
+    subject = models.CharField(max_length=10, choices=subject_choices, default='cs')
+
+    def __str__(self):
+        return self.Question
