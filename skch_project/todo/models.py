@@ -42,3 +42,12 @@ class Question(models.Model):
 
     def __str__(self):
         return self.Question
+
+
+class Qbank(models.Model):
+    question=models.TextField(max_length=500)
+    choice1=models.TextField(max_length=200)
+    choice2=models.TextField(max_length=200)
+    choice3=models.TextField(max_length=200)
+    choice4=models.TextField(max_length=200)
+    answer=models.CharField(max_length=1)

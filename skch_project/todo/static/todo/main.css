@@ -1,0 +1,42 @@
+.A {
+ background-color: chartreuse;
+ font-size: larger;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+.RH {
+  background-color: whitesmoke;
+  height: 101px;
+  font-weight: bold;
+  font-size:large;    
+  border:1px;
+}
+
+.RD {
+  background-color:ivory; 
+  border-style: solid;
+  padding:2px;
+  
+}
+
+.B {
+  color:black;
+  background-color: dodgerblue;
+  padding: 15px;
+  margin:10px;
+  font-size: large;
+}
+
+.panel {
+  margin:10px !important;
+  background-color:ivory;
+}
+
+textarea {
+  background-color:ivory;
+  margin:10px !important;
+}
+

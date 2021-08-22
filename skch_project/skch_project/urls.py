@@ -32,10 +32,10 @@ urlpatterns = [
     path('todo/<int:todo_pk>/complete',views.completetodo,name='completetodo'),
     path('todo/<int:todo_pk>/delete',views.deletetodo,name='deletetodo'),
     path('completed/',views.completedtodos,name='completedtodos'),
-
-    
-    
-
+    #Python Test
+    path('mcqpython', views.mcqpython, name='mcqpython'),
+      
+    #Forum
     path('postq',views.postq,name='postq'),
     path('unanswered',views.unanswered,name='unanswered'),
     path('question/<int:question_pk>', views.answer, name='answer'),

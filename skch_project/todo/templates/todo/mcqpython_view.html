@@ -1,0 +1,70 @@
+
+{% extends 'todo/base.html' %}
+{% block content%}
+<!-- <container> -->
+    <!-- Total column length is 12 . hence each row is divided accordingly-->
+
+    {% if error %}
+    <h1> {{error}} Pls retake the test </h1>
+    {% endif %}
+    <form method='POST'>
+        {% csrf_token %}
+        <div class="jumbotron text-center container-fluid" style="background-color: lightpink;">
+            <h3> <b> Python Test - {{number_qs}} Questions </b> </h3>
+            <h3> <b> Pass Percentage is 40 percent </b> </h3>
+        </div>
+
+
+        {% for question in questions %}
+        <div class="row RD">
+            <div class="col-xs-4">
+
+
+                <b> <textarea rows=5 cols=50 readonly> {{question.question}} </textarea></b>
+
+
+            </div>
+            <div class="col-xs-2">
+                <div class="panel panel-primary">
+                    <div class="panel-body" style="min-height: 100px;;max-height: 100px;overflow-y: scroll;">
+                        <b> <input type="radio" name="Qn{{question.id}}" value=1> {{question.choice1 }} </b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-2">
+                <div class="panel panel-primary">
+                    <div class="panel-body" style="min-height: 100px;;max-height: 100px;overflow-y: scroll;">
+                        <b> <input type="radio" name="Qn{{question.id}}" value=2> {{question.choice2 }} </b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-2">
+                <div class="panel panel-primary">
+                    <div class="panel-body" style="min-height: 100px;;max-height: 100px;overflow-y: scroll;">
+                        <b> <input type="radio" name="Qn{{question.id}}" value=3> {{question.choice3 }} </b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-2">
+                <div class="panel panel-primary">
+                    <div class="panel-body" style="min-height: 100px;;max-height: 100px;overflow-y: scroll;">
+                        <b> <input type="radio" name="Qn{{question.id}}" value=4> {{question.choice4 }} </b>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+
+
+        <div class="row">
+            <div class="col-xs-4 col-xs-offset-6">
+                <button type="Submit" class="B"> <b> Submit for evaluation </b> </button>
+            </div>
+        </div>
+    </form>
+<!-- </container> -->
+
+
+
+{% endblock %}

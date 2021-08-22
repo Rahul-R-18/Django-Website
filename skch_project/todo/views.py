@@ -3,11 +3,12 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login,logout,authenticate
-from .forms import TodoForm,PQuestionForm,AQuestionForm
-from .models import Todo,Question
+from .forms import TodoForm,PQuestionForm,AQuestionForm,UserForm
+from .models import Todo,Question,Qbank
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from .forms import UserForm
+import random
+import re
 
 
 
@@ -165,3 +166,61 @@ def answer(request, question_pk):
             return redirect('unanswered')
         except ValueError:
             return render(request, 'todo/answer.html',{'question':question, 'form':form, 'error': 'Bad info'})
+
+
+
+@login_required
+def mcqpython(request):   
+    
+    #number of questions to be asked in the test
+    questions_in_test=5
+
+    if request.method=='GET':
+        #sending random questions from the question bank
+        print("within GET",request.GET,type(request.GET))
+        all_questions=Qbank.objects.all()
+        print("all questions",all_questions,type(all_questions))
+        random_questions=random.sample(list(all_questions),questions_in_test)
+        print("Questions picked",random_questions,type(random_questions))
+        return render(request,'todo/mcqpython_view.html',{"questions":random_questions,"number_qs":questions_in_test})
+    else:
+        print("within POST",request.POST,type(request.POST))
+        marks=0                
+        try:          
+            questions_list={}
+            #Extracting the answers submitted by the user and storing as dictionary
+            for key in request.POST.keys():
+                if re.search("Qn",key):
+                    questions_list[key]=request.POST[key]
+            print("answers submitted",questions_list)            
+            total_questions=len(questions_list)
+
+            for question in questions_list.keys():
+                dummy=question.split("Qn")  #all form variable names will be of the form "Qn<x>", where x is the primary key of the qbank                 
+                record=Qbank.objects.get(pk=int(dummy[1]))         
+                print(record)       
+                correct_answer=record.answer                             
+                if questions_list[question]==correct_answer:
+                    marks=marks+1
+                    print("Correct")
+                else:
+                    print("Wrong")
+        except:
+            error="Some Exception happened."            
+            all_questions=Qbank.objects.all()
+            random_questions=random.sample(list(all_questions),questions_in_test)            
+            return render(request,'todo/mcqpython_view.html',{"questions":random_questions,"error":error,"number_qs":questions_in_test})
+
+        #calculating the marks
+        score = marks / questions_in_test * 100 
+        
+        #checking for pass/fail
+        if score>=40:
+            result=1
+        else:
+            result=0
+
+        #returning the result to the user
+        return render(request,'todo/passfail.html',{"result":result,"score":round(score)})
+
+
