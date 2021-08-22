@@ -7,28 +7,27 @@ from .forms import TodoForm,PQuestionForm,AQuestionForm
 from .models import Todo,Question
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from .forms import UserForm
 
 
 
 def home(request):
     return render(request, 'todo/home.html')
     
+
 def signupuser(request):
-    if request.method == 'GET':
-        return render(request, 'todo/signupuser.html',{'form':UserCreationForm()})
-    else:
+    if request.method=="GET":
+        return render(request,'todo/signupuser.html',{'form':UserForm()})
+    else:        
         print(request.POST)
-        if request.POST['password1']==request.POST['password2']:
-            try:
-                user=User.objects.create_user(username=request.POST['username'],password=request.POST['password1'])
-                user.save()
-                login(request,user)
-                return redirect('currenttodos')
-            except IntegrityError:
-                return render(request, 'todo/signupuser.html',{'form':UserCreationForm(),"error":"Username already exists"})
+        form = UserForm(request.POST)
+        print(form)
+        if form.is_valid():
+            form.save()            
+            return redirect('currenttodos')
         else:
-            
-            return render(request, 'todo/signupuser.html',{'form':UserCreationForm(),"error":"Passwords didn't match"})
+            err=form.errors
+            return render(request,'todo/signupuser.html',{'form':UserForm(),'error':err})
 
 @login_required
 def currenttodos(request):

@@ -7,8 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="{% static "todo/bootstrap.min.css" %}" >
     <link rel="icon" type="image/png"  href="{% static 'todopics/b.png' %}">
     <title>Byte Academy</title>
 </head>
@@ -60,9 +59,7 @@
 
         <ul class="navbar-nav ml-auto">
                 
-                <span class="navbar-text">
-                    Logged in as {{ user.username }}
-                </span>
+
                 <form action="{% url 'logoutuser' %}" method="POST">
                      {% csrf_token %}
 
