@@ -35,7 +35,7 @@ urlpatterns = [
     #Python Test
     path('mcqpython', views.mcqpython, name='mcqpython'),
       
-    #Forum
+    #Forum and learn python
     path('postq',views.postq,name='postq'),
     path('unanswered',views.unanswered,name='unanswered'),
     path('question/<int:question_pk>', views.answer, name='answer'),

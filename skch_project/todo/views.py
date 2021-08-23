@@ -25,7 +25,7 @@ def signupuser(request):
         print(form)
         if form.is_valid():
             form.save()            
-            return redirect('currenttodos')
+            return redirect('loginuser')
         else:
             err=form.errors
             return render(request,'todo/signupuser.html',{'form':UserForm(),'error':err})
@@ -44,7 +44,7 @@ def loginuser(request):
             return render(request, 'todo/loginuser.html',{'form':AuthenticationForm(),'error':'incorrect username or password'})
         else:
             login(request,user)
-            return redirect('currenttodos')
+            return redirect('about')
 
 @login_required
 def logoutuser(request):
