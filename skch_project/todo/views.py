@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login,logout,authenticate
 from .forms import TodoForm,PQuestionForm,AQuestionForm,UserForm
-from .models import Todo,Question,Qbank
+from .models import Todo,Question,Qbank,Python_Test_Status
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 import random
@@ -219,8 +219,29 @@ def mcqpython(request):
             result=1
         else:
             result=0
+        
+        #adding a entry to Python_Test_Status table
+        new_entry = Python_Test_Status()
+        new_entry.user=request.user
+        new_entry.marks=int(score)
+        print(int(score))
+
+        if result==1:
+            new_entry.status="Pass"
+        else:
+            new_entry.status="Fail"
+
+        print("Printing the new entry to be inserted into the python status table")
+        print(new_entry,type(new_entry))
+
+        new_entry.save()
 
         #returning the result to the user
         return render(request,'todo/passfail.html',{"result":result,"score":round(score)})
 
 
+
+@login_required
+def mcqpython_status(request):
+    test_entries=Python_Test_Status.objects.filter(user=request.user)
+    return render(request, 'todo/test_entries.html',{'test_entries':test_entries})

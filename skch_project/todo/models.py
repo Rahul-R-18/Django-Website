@@ -51,3 +51,12 @@ class Qbank(models.Model):
     choice3=models.TextField(max_length=200)
     choice4=models.TextField(max_length=200)
     answer=models.CharField(max_length=1)
+
+class Python_Test_Status(models.Model):
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    status=models.TextField()
+    test_date=models.DateTimeField(auto_now_add=True)
+    marks=models.IntegerField()    
+        
+    def __str__(self):
+        return f"{self.test_date} {self.status} {self.marks}"

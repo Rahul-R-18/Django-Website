@@ -34,6 +34,7 @@ urlpatterns = [
     path('completed/',views.completedtodos,name='completedtodos'),
     #Python Test
     path('mcqpython', views.mcqpython, name='mcqpython'),
+    path('mcqpython_status', views.mcqpython_status, name='mcqpython_status'),
       
     #Forum and learn python
     path('postq',views.postq,name='postq'),

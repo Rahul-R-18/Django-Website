@@ -1,0 +1,16 @@
+{%extends 'todo/base.html' %}
+{%block content%}
+Python Test Status
+
+<ul>
+ {%for entry in test_entries%}
+ <li>    
+     
+     Test Date : {{entry.test_date|date:'M j Y H:i'}}, 
+     Percentage : {{entry.marks}},
+     Result : <b> {{entry.status}} </b>
+    
+ </li>
+ {%endfor%}
+</ul>
+{%endblock%}
